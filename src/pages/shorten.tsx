@@ -87,6 +87,7 @@ export default function Home() {
               <Button
                 onClick={async () => {
                   const reponse = await axios.post("/api/shorten", { url });
+                  alert("Here's the shortened link: "+ reponse.data)
                 }}
                 className="space-x-10"
               >
