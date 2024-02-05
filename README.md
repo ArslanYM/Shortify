@@ -29,6 +29,7 @@ This Next.js app allows users to shorten links using the Bitly API. It incorpora
 - Your app should be accessible at http://localhost:3000.
 
 ## Technologies Used
-- Next.js: Next.js Documentation
-- Bitly API: Bitly API Documentation
-- Zod: Zod Documentation
+- Next.js
+- Bitly API
+- Zod
+- Shadcn Components
