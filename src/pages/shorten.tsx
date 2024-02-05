@@ -8,7 +8,7 @@ import { z } from "zod";
 import axios from "axios";
 
 //TODO1: toast not working
-//TODO2: add backend for url shorterning using mongo
+
 
 
 export default function Home() {

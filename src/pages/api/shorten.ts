@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-var TOKEN = "ee722049cd92926638490b2ff9e2fc44424aa070";
+var TOKEN = process.env.TOKEN;
 
 export default async function handler(req: NextApiRequest, res:NextApiResponse ){
      const URL =  req.body.url;
