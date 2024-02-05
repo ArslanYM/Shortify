@@ -1,17 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ToastAction } from "@/components/ui/toast"
-import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { z } from "zod";
 import axios from "axios";
 
-//TODO: toast not working 
+//TODO1: toast not working
+//TODO2: add backend for url shorterning using mongo
+
+
 export default function Home() {
+  const { toast } = useToast();
   const [url, setUrl] = useState("");
   const [isUrlValid, setIsUrlValid] = useState(false);
-  const {toast } = useToast()
+
   const urlSchema = z.string().refine(
     (url) => {
       const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -27,22 +31,9 @@ export default function Home() {
     try {
       urlSchema.parse(url);
       setIsUrlValid(true);
-      toast({
-        title: "Great JOB!",
-        description: "The URL you entered is valid.",
-        action: (
-            <ToastAction altText="" >OKAY!</ToastAction>
-          ),
-      })
     } catch (error) {
       setIsUrlValid(false);
-      toast({
-        title: "Heads Up!",
-        description: "The URL you entered is not valid.",
-        action: (
-            <ToastAction altText="Goto URL to undo">Undo</ToastAction>
-          ),
-      })
+      alert("Invalid URL")
     }
   };
 
@@ -58,20 +49,34 @@ export default function Home() {
         }}
       >
         <div className="items-center  text-center space-y-6">
+         {
+
+          isUrlValid? 
+          <></> : 
           <Input
             placeholder="Enter the URL "
             onChange={(e) => {
               setUrl(e.target.value);
             }}
           ></Input>
+
+
+         }
+          
           {isUrlValid ? (
             <></>
           ) : (
             <Button
-            onClick={() => {
-                validateURL(url)
+              onClick={() => {
+                validateURL(url);
+                toast({
+                  title: "Heads Up!",
+                  description: "The URL you entered is not valid.",
+                  action: (
+                    <ToastAction altText="Goto URL to undo">Undo</ToastAction>
+                  ),
+                });
               }}
-            
             >
               Valid URL?
             </Button>
@@ -79,9 +84,14 @@ export default function Home() {
 
           {isUrlValid ? (
             <>
-              <Button onClick={ async ()=>{
-                const reponse = await axios.post("/api/shorten", {url});
-              }} className="space-x-10">Shorten URL</Button>
+              <Button
+                onClick={async () => {
+                  const reponse = await axios.post("/api/shorten", { url });
+                }}
+                className="space-x-10"
+              >
+                Shorten URL
+              </Button>
             </>
           ) : (
             <></>

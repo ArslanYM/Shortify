@@ -9,7 +9,6 @@ export default function Document() {
         <Main />
         <Toaster />
         <NextScript />
-        
       </body>
     </Html>
   );
